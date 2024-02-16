@@ -81,6 +81,7 @@ package hw3;
 
 //	第三題:阿文很喜歡簽大樂透(1~49),但他是個善變的人,上次討厭數字是4,但這次他想要依心情決定討厭哪個數字,請您設計一隻程式,讓阿文可以輸入他不想要的數字(1~9),畫面會顯示他可以選擇的號碼與總數。
 import java.util.Scanner;
+import java.util.HashSet;
 
 public class hw3_37 {
 
@@ -88,25 +89,46 @@ public class hw3_37 {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("阿文，請問你不想要出現哪個數字?(1~9)");
-		int hatNum = sc.nextInt();
-		int num;
-		System.out.println("你可以選擇的號碼有:");
-		int count = 1;
-		if (hatNum >= 1 && hatNum <= 9) {
-			for (num = 1; num <= 49; num++) {
-				if (num / 10 == hatNum || num % 10 == hatNum) {
-					continue;
-				}
-				System.out.print(num + "\t");
-				if (count % 6 == 0) {
-					System.out.println();
-				}
-				count++;
-			}
-		} else {
+		int hateNum = sc.nextInt();
+		int num1;
+		if (hateNum < 1 || hateNum > 9) {
 			System.out.println("輸入的數字超過範圍了(範圍:1~9)");
+			return;
+		}
+		int count = 1;
+		System.out.println();
+		System.out.println("你可以選擇的號碼有:");
+
+		for (num1 = 1; num1 <= 49; num1++) {
+			if (num1 / 10 == hateNum || num1 % 10 == hateNum) {
+				continue;
+			}
+			System.out.print(num1 + "\t");
+			if (count % 6 == 0) {
+				System.out.println();
+			}
+			count++;
 		}
 		System.out.println("總共有" + (count - 1) + "個數字可選");
+
+		// 從其中選出6個數字給阿文。
+		HashSet<Integer> randomNumResult =new HashSet();
+		while(randomNumResult.size()!=6){
+			//取1~49亂數
+			int random=(int)(Math.random()*49)+1;
+			//判斷條件
+			if(random/10 ==hateNum||random%10 ==hateNum) {
+				continue;
+			}
+			randomNumResult.add(random);
+		}
+		System.out.println();
+		System.out.println("幫你選好6個數字如下:");
+		
+		for(Integer num2:randomNumResult) {
+			System.out.print(num2+" ");
+		}
+
 		sc.close();
 	}
 }
