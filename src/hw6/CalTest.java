@@ -28,7 +28,7 @@ public class CalTest {
 				return;
 
 			} catch (CalException m) {
-				System.out.println(m.getMessage());
+				m.printStackTrace();;
 			} catch (InputMismatchException m) {
 				System.out.println("輸入格式不正確");
 			}

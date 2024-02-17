@@ -97,28 +97,26 @@ package hw5;
 //	}
 //}
 
-//	第四題:。
-
 //	第五題:身為程式設計師的你,收到一個任務,要幫系統的註冊新增驗證碼的功能,請設計一個方法genAuthCode(),當呼叫此方法時,會回傳一個8位數的驗證碼,此驗證碼內容包含了英文大小寫與數字的亂數組合。
 //
-//import java.util.Random;
-//
-//public class hw5_37 {
-//
-//	public String genAuthCode() {
-//		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//		StringBuilder sb = new StringBuilder();
-//		Random random = new Random();
-//		
-//		for (int i = 0; i < 8; i++) {
-//			sb.append(characters.charAt(random.nextInt(characters.length())));
-//		}
-//		
-//		return sb.toString();
-//	}
-//	
-//	public static void main(String[] args) {
-//		hw5_37 h = new hw5_37();
-//		System.out.println("本次隨機產生驗證碼為: \n" + h.genAuthCode());
-//	}
-//}
+import java.util.Random;
+
+public class hw5_37 {
+
+	public String genAuthCode() {
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		
+		for (int i = 0; i < 8; i++) {
+			sb.append(characters.charAt(random.nextInt(characters.length())));
+		}
+		
+		return sb.toString();
+	}
+	
+	public static void main(String[] args) {
+		hw5_37 h = new hw5_37();
+		System.out.println("本次隨機產生驗證碼為: \n" + h.genAuthCode());
+	}
+}

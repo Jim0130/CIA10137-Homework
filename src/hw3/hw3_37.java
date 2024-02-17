@@ -111,7 +111,7 @@ public class hw3_37 {
 		}
 		System.out.println("總共有" + (count - 1) + "個數字可選");
 
-		// 從其中選出6個數字給阿文。
+//	第三題(進階):從其中選出6個數字給阿文。
 		HashSet<Integer> randomNumResult =new HashSet();
 		while(randomNumResult.size()!=6){
 			//取1~49亂數
