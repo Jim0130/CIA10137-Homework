@@ -1,6 +1,7 @@
 package hw7;
 
 //	第一題:請寫一個程式讀取這個Sample.txt檔案,並輸出以下訊息:Sample.txt檔案共有xxx個位元組,yyy個字元,zzz列資料。
+
 //import java.io.BufferedReader;
 //import java.io.File;
 //import java.io.FileReader;
@@ -44,6 +45,7 @@ package hw7;
 //}
 
 //	第二題:請寫一隻程式,能夠亂數產生10個1~1000的整數,並寫入一個名為Data.txt的檔案裡 (請使用append功能讓每次執行結果都能被保存起來)。
+
 //import java.io.FileWriter;
 //import java.io.IOException;
 //import java.io.PrintWriter;
@@ -104,5 +106,133 @@ package hw7;
 
 //	第四題:請寫一支程式,利用老師提供的Dog與Cat類別分別產生兩個物件,寫到C:\data\Object.ser裡(注意物件寫入需注意的事項,若C:\內沒有data資料夾,請用程式新增這個資料夾)。
 
+//import java.io.File;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.ObjectOutputStream;
+//import java.io.Serializable;
+//
+//class Dog implements Serializable {
+//	String name;
+//
+//    Dog(String name) {
+//        this.name = name;
+//    }
+//}
+//
+//class Cat implements Serializable {
+//	String name;
+//
+//	Cat(String name) {
+//		this.name = name;
+//	}
+//}
+//
+//public class hw7_37 {
+//	
+//	public static void main(String[] args) {
+//		Dog dog = new Dog("MAX");
+//		Cat cat = new Cat("LOUIS");
+//
+//		File directory = new File("C:\\data");
+//		if (!directory.exists()) {
+//			directory.mkdirs();
+//		}
+//
+//		String filename = "C:\\data\\Object.ser";
+//		try (FileOutputStream fileOut = new FileOutputStream(filename);
+//				ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+//
+//			out.writeObject(dog);
+//			out.writeObject(cat);
+//
+//			System.out.println("物件已成功寫入以下路徑的資料夾內: " + filename + "。");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//}
+
 //	第五題:承上題,請寫一個程式,能讀取Object.ser這四個物件,並執行speak()方法觀察結果如何(請利用多型簡化本題的程式設計)。
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+abstract class Animal implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	abstract void speak();
+}
+
+class Dog extends Animal {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6033500359268681090L;
+	String name;
+
+	Dog(String name) {
+		this.name = name;
+	}
+
+	@Override
+	void speak() {
+		System.out.println(name + " says Woof !");
+	}
+}
+
+class Cat extends Animal {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5926639200535915860L;
+	String name;
+
+	Cat(String name) {
+		this.name = name;
+	}
+
+	@Override
+	void speak() {
+		System.out.println(name + " says Mew !");
+	}
+}
+
+public class hw7_37 {
+
+	public static void main(String[] args) {
+		String filename = "C:\\data\\Object.ser";
+		ArrayList<Animal> animals = readObjects(filename);
+
+		if (animals != null) {
+			for (Animal animal : animals) {
+				animal.speak();
+			}
+		}
+	}
+
+	public static ArrayList<Animal> readObjects(String filename) {
+		ArrayList<Animal> animals = new ArrayList();
+		try (FileInputStream fis = new FileInputStream(filename);
+				ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+			while (true) {
+				Object obj = ois.readObject();
+				if (obj instanceof Animal) {
+					animals.add((Animal) obj);
+				}
+			}
+		} catch (EOFException e) {
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		return animals;
+	}
+}
